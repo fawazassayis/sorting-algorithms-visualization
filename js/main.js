@@ -1,4 +1,7 @@
+// import worker ( for threading )
+let worker = new Worker("js/worker.js")
 
+// set grid dimension & append monitors
 const set_grid = (x, y) =>{
     board = document.querySelector("#board")
     board.style.grid = `repeat(${x}, 1fr) / repeat(${y}, 1fr)`
@@ -9,6 +12,7 @@ const set_grid = (x, y) =>{
     }
 }
 
+// generate a shuffled list containing all number in a range 
 function shuffledList(range){
     list = []
     for(let i = 0; i < range; i++){
@@ -20,6 +24,7 @@ function shuffledList(range){
     return list
 }
 
+// add a visualization bar for each element in the shuffledList in each monitor
 function add_elements(list){
     monitors = document.querySelectorAll(".monitor")
     monitors.forEach(monitor => {
@@ -35,4 +40,7 @@ function add_elements(list){
 
 
 set_grid(4, 6)
-add_elements(shuffledList(10))
+list = shuffledList(30)
+add_elements(list)
+worker.postMessage(list)
+
