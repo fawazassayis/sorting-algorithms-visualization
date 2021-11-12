@@ -1,9 +1,7 @@
-// import worker ( for threading )
-let worker = new Worker("js/worker.js")
 
 // set grid dimension & append monitors
 const set_grid = (x, y) =>{
-    board = document.querySelector("#board")
+    let board = document.querySelector("#board")
     board.style.grid = `repeat(${x}, 1fr) / repeat(${y}, 1fr)`
     for(let i = 0; i < x * y; i ++){
         let monitor = document.createElement("div")
@@ -14,9 +12,9 @@ const set_grid = (x, y) =>{
 
 // generate a shuffled list containing all number in a range 
 function shuffledList(range){
-    list = []
+    let list = []
     for(let i = 0; i < range; i++){
-        n = Math.floor(Math.random() * range + 1)
+        let n = Math.floor(Math.random() * range + 1)
         if(!list.find(e => e == n)){
             list.push(n)
         }else i--
@@ -26,10 +24,10 @@ function shuffledList(range){
 
 // add a visualization bar for each element in the shuffledList in each monitor
 function add_elements(list){
-    monitors = document.querySelectorAll(".monitor")
+    let monitors = document.querySelectorAll(".monitor")
     monitors.forEach(monitor => {
-        for(n in list){
-            bar = document.createElement("div")
+        for(let n in list){
+            let bar = document.createElement("div")
             bar.classList.add("bar")
             bar.style.width = 100 / list.length + "%"
             bar.style.height = list[n] / list.length * 100 + "%"
@@ -40,7 +38,7 @@ function add_elements(list){
 
 
 set_grid(4, 6)
-list = shuffledList(30)
+let list = shuffledList(30)
 add_elements(list)
-worker.postMessage(list)
+
 
