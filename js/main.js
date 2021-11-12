@@ -1,4 +1,5 @@
 const algorithms = ["Binary Insetion Sort", "bitonic Sort", "Block Merge Sort ( Wiki Sort )", "Bubble Sort", "Cocktail Shaker Sort", "Combo Sort", "Cycle Sort", "Gnome Sort", "Heap Sort", "Insertion Sort", "Merge Sort", "Odd-Even Sort", "Quick Sort (dual pivot)", "Quick Sort ( LL ptrs )", "Quick Sort (LR ptrs)", "Quick Sort (terany, LR ptrs)", "Quick Sort (terany, LL ptrs)", "Radix Sort (LSD)", "Radix Sort (MSD)", "Selection Sort", "Shell Sort", "Smooth Sort", "Std::sort (gcc)", "Trim Sort"]
+// ["binaryInsertion","bitonic","blockMerge","bubble","cocktailShaker","combo","cycle","gnome","heap","insertion","merge","oddEven","quickDualPivot","quickLL","quickLR","quickTeranyLL","quickTeranyLR","radixLSD","radixMSD","selection","shell","smooth","stdGCC","trim"]
 
 // generate a shuffled list containing all number in a range 
 function shuffledList(range){
@@ -100,3 +101,4 @@ shell.postMessage(list)
 smooth.postMessage(list)
 stdGCC.postMessage(list)
 trim.postMessage(list)
+
