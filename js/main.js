@@ -51,7 +51,6 @@ let smooth = new Worker('js/algorithms/smooth.js');
 let stdGCC = new Worker('js/algorithms/stdGCC.js');
 let trim = new Worker('js/algorithms/trim.js');
 
-
 // generate a shuffled list containing all number in a range 
 function shuffledList(range){
     let list = []
@@ -78,6 +77,22 @@ function add_elements(list){
     });
 }
 
+// update elements with each iteration
+function update_elements(list, i, j, gi){
+    let graph = document.querySelectorAll(".graph")[gi]
+    let bars = graph.children
+    for(let c = 0; c < 24; c++){
+        bars[c].style.background = "white"
+    }
+    bars[i].style.background = "green";
+    bars[j].style.background = "green";
+    for(let n in list){
+        bars[n].style.width = 100 / list.length + "%"
+        bars[n].style.height = list[n] / list.length * 100 + "%"
+    }
+
+}
+
 // set grid dimension & append graphs
 const set_grid = (x, y) =>{
     let board = document.querySelector("#board")
@@ -101,8 +116,8 @@ let list = shuffledList(x*y)
 set_grid(x, y)
 add_elements(list)
 
-
 // send list to workers
+
 binaryInsertion.postMessage(list)
 bitonic.postMessage(list)
 blockMerge.postMessage(list)
@@ -128,3 +143,10 @@ smooth.postMessage(list)
 stdGCC.postMessage(list)
 trim.postMessage(list)
 
+let delay = 0
+selection.addEventListener("message", m =>{
+    delay += 30
+    setTimeout(() => {
+        update_elements(...m.data)
+    }, delay);
+})
