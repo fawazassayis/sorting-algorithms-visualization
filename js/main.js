@@ -79,13 +79,14 @@ function add_elements(list){
 
 // update elements with each iteration
 function update_elements(list, i, j, gi){
-    let graph = document.querySelectorAll(".graph")[gi]
+    let graph = document.querySelectorAll(".graph")[gi] // gi = graph index
     let bars = graph.children
     for(let c = 0; c < 24; c++){
         bars[c].style.background = "white"
     }
-    bars[i].style.background = "green";
+    bars[i].style.background = "red";
     bars[j].style.background = "green";
+    bars[j+1].style.background = "blue";
     for(let n in list){
         bars[n].style.width = 100 / list.length + "%"
         bars[n].style.height = list[n] / list.length * 100 + "%"
@@ -143,10 +144,28 @@ smooth.postMessage(list)
 stdGCC.postMessage(list)
 trim.postMessage(list)
 
-let delay = 0
+// creating a delayed callstack for the animation
+
+let selection_delay = 0;
 selection.addEventListener("message", m =>{
-    delay += 30
+    selection_delay += 300
     setTimeout(() => {
         update_elements(...m.data)
-    }, delay);
+    }, selection_delay);
+})
+
+let shell_delay = 0;
+shell.addEventListener("message", m =>{
+    shell_delay += 300
+    setTimeout(() => {
+        update_elements(...m.data)
+    }, shell_delay);
+})
+
+let bubble_delay = 0;
+bubble.addEventListener("message", m =>{
+    bubble_delay += 300
+    setTimeout(() => {
+        update_elements(...m.data)
+    }, bubble_delay);
 })
