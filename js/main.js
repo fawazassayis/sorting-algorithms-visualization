@@ -40,7 +40,7 @@ let merge = new Worker('js/algorithms/merge.js');
 let oddEven = new Worker('js/algorithms/oddEven.js');
 let quickDualPivot = new Worker('js/algorithms/quickDualPivot.js');
 let quickLL = new Worker('js/algorithms/quickLL.js');
-let quickLR = new Worker('js/algorithms/quickLR.js');
+let quickLR = new Worker('js/algorithms/quickLR.js');2
 let quickTeranyLL = new Worker('js/algorithms/quickTeranyLL.js');
 let quickTeranyLR = new Worker('js/algorithms/quickTeranyLR.js');
 let radixLSD = new Worker('js/algorithms/radixLSD.js');
@@ -78,14 +78,15 @@ function add_elements(list){
 }
 
 // update elements with each iteration
-function update_elements(list, i, j, gi){
-    let graph = document.querySelectorAll(".graph")[gi]
+function update_elements(list, i, j, gi, gap){
+    let graph = document.querySelectorAll(".graph")[gi] // gi = graph index
     let bars = graph.children
     for(let c = 0; c < 24; c++){
         bars[c].style.background = "white"
     }
-    bars[i].style.background = "green";
+    bars[i].style.background = "red";
     bars[j].style.background = "green";
+    bars[j+gap].style.background = "blue";
     for(let n in list){
         bars[n].style.width = 100 / list.length + "%"
         bars[n].style.height = list[n] / list.length * 100 + "%"
@@ -143,10 +144,32 @@ smooth.postMessage(list)
 stdGCC.postMessage(list)
 trim.postMessage(list)
 
-let delay = 0
+// creating a delayed callstack for the animation
+let delay;
+setTimeout(() => {
+    delay = Number(prompt("Delay (ms): "))
+}, 100);
+
+let selection_delay = 0;
 selection.addEventListener("message", m =>{
-    delay += 30
+    selection_delay += delay
     setTimeout(() => {
         update_elements(...m.data)
-    }, delay);
+    }, selection_delay);
+})
+
+let shell_delay = 0;
+shell.addEventListener("message", m =>{
+    shell_delay += delay
+    setTimeout(() => {
+        update_elements(...m.data)
+    }, shell_delay);
+})
+
+let bubble_delay = 0;
+bubble.addEventListener("message", m =>{
+    bubble_delay += delay
+    setTimeout(() => {
+        update_elements(...m.data)
+    }, bubble_delay);
 })
